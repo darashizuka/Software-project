@@ -1,0 +1,255 @@
+/* Add styles for product grid */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-gap: 20px;
+    margin: 20px;
+}
+
+.product-grid-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+
+.product_image {
+    height: 400px;
+    width: 350px;
+    overflow: hidden;
+}
+
+.product_image img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+
+.product-grid-item h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.product-grid-item:hover {
+    transform: translateY(-5px);
+}
+
+
+.product-grid-item p {
+    margin: 10px 0;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.product-grid-item .price {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.product-grid-item .seller {
+    font-size: 14px;
+    color: #777;
+}
+
+.product-grid-item:nth-child(n+19) {
+    display: none;
+}
+
+.product-grid-item * {
+    width: 100%;
+}
+
+.main_info {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.pagination li {
+    margin: 0 5px;
+}
+
+.pagination li a {
+    display: block;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.pagination li.disabled a {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.pagination li.active a,
+.pagination li a:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+.buttons {
+    margin-top: 10px;
+    max-width: 80%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttons * {
+    background-color: #E7B8FA;
+    outline: none;
+    border: 2px solid #e5c5dd;
+    flex-basis: 40%;
+    padding: 3%;
+    border-radius: 4px;
+}
+
+.search {
+    background-color: #E7B8FA;
+    outline: none;
+    border: 2px solid #e5c5dd;
+    border-radius: 4px;
+}
+
+.input {
+    min-width: 100%;
+}
+
+.cart {
+    position: relative;
+}
+
+.cart-count {
+    font-size: 14px;
+    font-weight: bold;
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    background-color: #B39DDB;
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+}
+
+.search-container {
+    display: flex;
+}
+
+.search {
+    margin-left: auto;
+    background-color: lavender;
+}
+
+input[type=text] {
+    width: 130px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+/* When the input field gets focus, change its width to 100% */
+input[type=text]:focus {
+    width: 100%;
+}
+
+.cart-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 30px;
+    height: 30px;
+    margin-left: auto;
+    cursor: pointer;
+
+}
+
+.cart-icon svg {
+    width: 100%;
+    height: 100%;
+    color: #B39DDB;
+}
+
+
+nav {
+    display: flex;
+    background-color: #e5c5dd;
+    flex-wrap: wrap;
+}
+
+nav ul {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-right: 20px;
+}
+
+nav li {
+    margin: auto;
+}
+
+nav li a {
+    padding: 10px;
+    margin: 5px;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    font-size: 110%;
+}
+
+nav h1 {
+    font-size: 250%;
+    text-shadow: 1px white;
+    padding-left: 20px;
+    font-family: 'Ysabeau', sans-serif;
+    color: #B494D7;
+    text-shadow: 1px black;
+}
+
+.seller {
+    background-color: violet;
+    width: max-content;
+    padding: 2px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.seller a {
+    text-decoration: none;
+    color: black;
+    max-width: min-content;
+    margin-left: 5px;
+}

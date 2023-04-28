@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Log In</title>
+    <link rel="stylesheet" href='/static/home.css' />
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <nav>
+            <h1 align="center">FlaminGo</h1>
+            <ul>
+                <li><a href="#FAQ">FAQ</a></li>
+                <li><a href="{{ url_for('index') }}">Shop</a></li>
+                <li class="signup">
+                    {% if current_user.is_anonymous %}
+                    <a href="{{ url_for('login') }}">Login</a>
+                    {% else %}
+                    <a href="{{ url_for('logout') }}">Logout</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+        <div class="intro">
+
+            <div class="intro_text">
+                <p class="intro_welcome"> Welcome to FlaminGo <br> Our marketplace provides a space for student artists,
+                    designers, home cooks, thrifters, and sellers of all kinds to showcase and sell their unique and
+                    beautiful products.</p>
+                <p class="intro_cta"> Looking to buy? <br> Whether you're looking for a one-of-a-kind handmade creation,
+                    a gently used item, delicious homemade food, educational materials, or quality secondhand furniture
+                    and electronics, our marketplace has something for everyone. Not only will you be supporting local
+                    talent and promoting sustainability, but you'll also have the opportunity to find some truly special
+                    treasures, great deals, and gain valuable insights from our talented students. </p>
+                <div class="CTA"><a href="{{ url_for('register') }}"> Start Shopping </a></div>
+                <p class="intro_cta"> Looking to turn your talents into cash?
+                    <br> With FlaminGo's user-friendly platform, you can set up shop in just 5 minutes. Sell delicious
+                    dorm-made dishes - offer the ultimate comfort food with every variation of Maggi, or satisfy their
+                    hunger with your tasty sandwiches. Perhaps you have gently used clothes, furniture, or appliances to
+                    sell and help others find great deals on quality items. You can even sell your course notes and
+                    educational materials to help other students succeed academically - the possibilities are limitless!
+                </p>
+                <div class="CTA"> <a href="{{ url_for('register') }}"> Start Selling </a> </div>
+            </div>
+
+            <img src="/static/landing.png" width="500" height="500">
+        </div>
+
+        <div class="line">
+            <div>
+
+                <div class="container">
+                    <h1>Frequently Asked Questions</h1>
+                    <div class="faqs">
+                        <div class="faq">
+                            <div class="toggle" data-target="panel1">What is FlaminGo?</div>
+                            <div class="panel" id="panel1">
+                                <p>FlaminGo is a digital marketplace for buying and selling handmade and vintage items.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="faq">
+                            <div class="toggle" data-target="panel2">How can I create an account?</div>
+                            <div class="panel" id="panel2">
+                                <p>To create an account, click on the "Sign up" button on the top right corner of the
+                                    website and fill in your details.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq">
+                            <div class="toggle" data-target="panel3">How can I sell on FlaminGo?</div>
+                            <div class="panel" id="panel3">
+                                <p>To sell on FlaminGo, you need to create an account and then go to the "Sell on
+                                    FlaminGo"
+                                    page. From there, you can create listings for your items and manage your shop.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq" id="FAQ">
+                            <div class="toggle" data-target="panel4">How can I contact customer support?</div>
+                            <div class="panel" id="panel4">
+                                <p>You can contact customer support by going to the "Contact us" page and filling out
+                                    the contact form.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <script>
+                let toggleButtons = document.querySelectorAll('.toggle');
+                for (let i = 0; i < toggleButtons.length; i++) {
+                    toggleButtons[i].addEventListener('click', function () {
+                        let targetId = this.getAttribute('data-target');
+                        let targetPanel = document.getElementById(targetId);
+                        targetPanel.classList.toggle('active');
+                        this.classList.toggle('active');
+                    });
+                }
+            </script>
+</body>
+
+</html>

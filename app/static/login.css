@@ -1,0 +1,107 @@
+.wrapper {
+    background-color: #e5c5dd;
+    min-height: 100vh;
+}
+
+nav {
+    display: flex;
+    background-color: #e5c5dd;
+    flex-wrap: wrap;
+}
+
+nav ul {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-right: 20px;
+}
+
+nav li {
+    margin: auto;
+}
+
+nav li a {
+    padding: 10px;
+    margin: 5px;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    font-size: 110%;
+}
+
+nav h1 {
+    font-size: 250%;
+    text-shadow: 1px white;
+    padding-left: 20px;
+    font-family: 'Ysabeau', sans-serif;
+    color: #B494D7;
+    text-shadow: 1px black;
+}
+
+h2 {
+    color: rebeccapurple;
+}
+
+.signup {
+    background: radial-gradient(circle at center, #b494d7, #af88db);
+    border: solid #dbc7f1 thin;
+    border-radius: 10px;
+    padding: 3px 5px;
+}
+
+.form-wrapper {
+    padding: 5%;
+    margin: auto;
+    margin-top: 50px;
+    max-width: 500px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    margin-top: 0;
+}
+
+.form-wrapper form button[type='submit'] {
+    border: 2px solid #e5c5dd;
+    width: 95%;
+    margin: 1%;
+    color: rebeccapurple;
+    border-radius: 4px;
+    background-color: white;
+}
+
+
+.form-wrapper form input:focus,
+.form-wrapper form button[type='submit'] {
+    background-color: rgba(231, 184, 250, 0.15);
+    outline: none;
+    border: 2px solid #e5c5dd;
+}
+
+.form-wrapper form input[type=button],
+.form-wrapper form input[type=submit],
+.form-wrapper form input[type=reset],
+.form-wrapper form button[type='submit'] {
+    background-color: #E7B8FA;
+}
+
+.form-wrapper form input[type="checkbox"]::before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: rgba(231, 184, 250, 0.15);
+    border: 1px solid #e5c5dd;
+    margin-right: 5px;
+}
+
+.form-wrapper form input[type="checkbox"]:checked::before {
+    content: "✔";
+    color: purple;
+}

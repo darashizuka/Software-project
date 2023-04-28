@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Shop</title>
+    <link rel="stylesheet" href='/static/user.css' />
+
+</head>
+
+
+<body>
+    <!-- partial:index.partial.html -->
+    <nav>
+        <div class="logo">
+            <h1>FlaminGo</h1>
+        </div>
+        <ul class="nav-links">
+
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('index') }}">Shop</a></li>
+            <li><a href="{{ url_for('user', username=current_user.username) }}">Profile</a></li>
+            {% if current_user.is_anonymous %}
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+            {% else %}
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% endif %}
+            <div class="cart">
+                <a href="#">
+                    <div class="cart-icon">
+                        <svg viewBox="0 0 448 512" width="100" title="shopping-bag">
+                            <path
+                                d="M352 160v-32C352 57.42 294.579 0 224 0 153.42 0 96 57.42 96 128v32H0v272c0 44.183 35.817 80 80 80h288c44.183 0 80-35.817 80-80V160h-96zm-192-32c0-35.29 28.71-64 64-64s64 28.71 64 64v32H160v-32zm160 120c-13.255 0-24-10.745-24-24s10.745-24 24-24 24 10.745 24 24-10.745 24-24 24zm-192 0c-13.255 0-24-10.745-24-24s10.745-24 24-24 24 10.745 24 24-10.745 24-24 24z" />
+                        </svg>
+                </a>
+                <span class="cart-count">0</span>
+                </a>
+            </div>
+            </div>
+        </ul>
+    </nav>
+
+    <div class="search-container">
+        <input type="text" name="search" placeholder="search.." class="search" id="search-input">
+    </div>
+
+    {% block content %}
+    <div class="sellercard">
+        <h5>{{ user.username }}</h5>
+        <h5>Phone Number: {{ user.phone }}</h5>
+        <h5>Address: {{ user.housing_address }}</h5>
+    </div>
+
+    <div class="product-grid">
+        <!-- Product items -->
+        {% if posts %}
+        {%for product in posts%}
+
+        <div class="product-grid-item">
+            <img src="{{product.img}}">
+            <div class="main_info">
+                <h3>{{product.name}}</h3>
+                <div class="price">{{product.price}}</div>
+            </div>
+            <p>{{product.description}}</p>
+
+            <div class="seller">
+                <img src="{{product.seller.avatar(128)}}" style="border-radius: 50%; width: 20px; height: 20px;">
+                <a href="#">{{user.username}}</a>
+            </div>
+            <div class="buttons">
+                <button class="get-now" data-id={{product.id}}>Get Now</button>
+                <button class="view-details">View Details</button>
+            </div>
+
+        </div>
+        {%endfor%}
+        {%endif%}
+
+        <div class="add_product">
+            <h6>Add a product to your shop</h6>
+            {% if user.username == current_user.username %}
+            <form action="" method="post" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.name.label }}<br>
+                    {{ form.name() }}<br>
+                    {% for error in form.name.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.description.label }}<br>
+                    {{ form.description(cols=32, rows=4) }}<br>
+                    {% for error in form.description.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.img.label }}<br>
+                    {{ form.img() }}<br>
+                    {% for error in form.img.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.price.label }}<br>
+                    {{ form.price() }}<br>
+                    {% for error in form.price.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>{{ form.submit() }}</p>
+            </form>
+            {% endif %}
+        </div>
+
+    </div>
+    {% endblock %}
+
+
+
+    </div>

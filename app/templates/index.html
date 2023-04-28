@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Shop</title>
+    <link rel="stylesheet" href='/static/shop.css' />
+
+</head>
+
+<body>
+    <!-- partial:index.partial.html -->
+    <nav>
+        <div class="logo">
+            <h1>FlaminGo</h1>
+        </div>
+        <ul class="nav-links">
+
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('user', username=current_user.username) }}">Profile</a></li>
+            {% if current_user.is_anonymous %}
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+            {% else %}
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% endif %}
+            <div class="cart">
+                <a href="#">
+                    <div class="cart-icon">
+                        <svg viewBox="0 0 448 512" width="100" title="shopping-bag">
+                            <path
+                                d="M352 160v-32C352 57.42 294.579 0 224 0 153.42 0 96 57.42 96 128v32H0v272c0 44.183 35.817 80 80 80h288c44.183 0 80-35.817 80-80V160h-96zm-192-32c0-35.29 28.71-64 64-64s64 28.71 64 64v32H160v-32zm160 120c-13.255 0-24-10.745-24-24s10.745-24 24-24 24 10.745 24 24-10.745 24-24 24zm-192 0c-13.255 0-24-10.745-24-24s10.745-24 24-24 24 10.745 24 24-10.745 24-24 24z" />
+                        </svg>
+                </a>
+                <span class="cart-count">0</span>
+                </a>
+            </div>
+            </div>
+        </ul>
+    </nav>
+
+
+
+    <div class="search-container">
+        <input type="text" name="search" placeholder="search.." class="search" id="search-input">
+        <button type="submit" class="search-button">Search</button>
+    </div>
+
+    <div class="product-grid">
+        <!-- Product items -->
+        {%for product in posts%}
+
+        <div class="product-grid-item">
+            <img src="{{product.img}}" alt="Product 1 " class="product_image">
+            <div class="main_info">
+                <h3>{{product.name}}</h3>
+                <div class="price">{{product.price}}</div>
+            </div>
+            <p>{{product.description}}</p>
+
+            <div class="seller">
+                <img src="{{product.seller.avatar(128)}}" style="border-radius: 50%; width: 20px; height: 20px;">
+                <a href="/user/{{product.seller.username}}">{{product.seller.username}}</a>
+            </div>
+            <div class="buttons">
+                <button class="get-now" data-id={{product.id}}>Get Now</button>
+
+                <script>
+                    const addToCartButton = document.querySelector('.add-to-cart-button');
+                    const itemId = addToCartButton.dataset.id;
+                    const userId = {{ product.seller.id }}; // Replace with actual user ID
+                    addToCartButton.addEventListener('click', function () {
+                        addToCart(itemId, userId);
+                    });
+                </script>
+                <button class="view-details">View Details</button>
+            </div>
+
+        </div>
+        {%endfor%}
+    </div>
+    </div>
+
+    <div class="pagination">
+        <ul>
+            <li class="disabled"><a href="#">Previous</a></li>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">Next</a></li>
+        </ul>
+    </div>
+</body>
+<!------------------------------ SCRIPT------------------------------------------->
+<script>
+    // get the product grid and pagination elements
+    const productGrid = document.querySelector('.product-grid');
+    const pagination = document.querySelector('.pagination');
+
+    // get the product grid items and the number of products per page
+    const products = productGrid.querySelectorAll('.product-grid-item');
+    const productsPerPage = 6;
+
+    // calculate the number of pages needed based on the number of products and products per page
+    const numPages = Math.ceil(products.length / productsPerPage);
+
+    // function to show/hide the appropriate products based on the current page
+    function showPage(page) {
+        // calculate the range of products to show on this page
+        const start = (page - 1) * productsPerPage;
+        const end = start + productsPerPage;
+
+        // loop through all products and show/hide them based on whether they fall within the range for this page
+        for (let i = 0; i < products.length; i++) {
+            if (i >= start && i < end) {
+                products[i].style.display = 'flex';
+            } else {
+                products[i].style.display = 'none';
+            }
+        }
+    }
+
+    // function to update the active page link in the pagination
+    function updatePagination(activePage) {
+        // get the list of page links
+        const pageLinks = pagination.querySelectorAll('li');
+
+        // loop through all page links and update the active class based on whether they match the current page
+        for (let i = 0; i < pageLinks.length; i++) {
+            const pageLink = pageLinks[i];
+            const pageNum = parseInt(pageLink.textContent);
+
+            if (pageNum === activePage) {
+                pageLink.classList.add('active');
+            } else {
+                pageLink.classList.remove('active');
+            }
+        }
+    }
+
+    // initialize the page to show the first page of products
+    showPage(1);
+    updatePagination(1);
+
+    // add event listeners to the page links in the pagination
+    pagination.addEventListener('click', (event) => {
+        // check if the clicked element is a page link
+        if (event.target.tagName === 'A') {
+            // get the page number from the link text
+            const page = parseInt(event.target.textContent);
+
+            // show the appropriate page of products and update the active page link
+            showPage(page);
+            updatePagination(page);
+
+            // prevent the default link behavior
+            event.preventDefault();
+        }
+    });
+
+
+
+    //SEARCH
+    // Define a function to filter the products based on the search query
+    function filterProducts(products, query) {
+        return products.filter(product =>
+            product.name.toLowerCase().includes(query.toLowerCase())
+        );
+    }
+
+    // Get references to the search input and search button
+    const searchInput = document.getElementById("search-input");
+    const searchButton = document.querySelector(".search-button");
+
+    // Get reference to the search results container
+    const searchResults = document.querySelector(".search-results");
+
+    // Define a function to render the search results
+    function renderResults(products) {
+        if (products.length === 0) {
+            searchResults.innerHTML = "<p>No results found</p>";
+        } else {
+            const resultsHtml = products.map(product => `
+      <div class="product">
+        <h3>${product.name}</h3>
+        <p>${product.description}</p>
+      </div>
+    `).join("");
+            searchResults.innerHTML = resultsHtml;
+        }
+    }
+
+    // Define a function to handle the search
+    function handleSearch(event, products) {
+        event.preventDefault();
+        const query = searchInput.value.trim();
+        const filteredProducts = filterProducts(products, query);
+        renderResults(filteredProducts);
+    }
+
+    // Attach an event listener to the search button
+    searchButton.addEventListener("click", event => handleSearch(event, products));
+
+    // Attach an event listener to the search input to trigger search on enter key
+    searchInput.addEventListener("keydown", event => {
+        if (event.keyCode === 13) {
+            handleSearch(event, products);
+        }
+    });
+
+
+
+
+</script>
+
+</body>
+
+</html>
